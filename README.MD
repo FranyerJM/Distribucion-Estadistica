@@ -1,89 +1,242 @@
-# Ejercicios Estadistica
+# 📊 Ejercicios Estadística II - Solución Manual Detallada
 
-## Autores
+## 👥 Autores
 
-| Estudiante | Cedula  |
-| :-------- | :------- |
-| `Franyer Marin` | `32.293.396` | 
-| `Nombre Apellido` | `CEDULA` | 
-
+| Estudiante         | Cédula      |
+|--------------------|-------------|
+| Franyer Marin      | 32.293.396  |
+| Nombre Apellido    | CÉDULA      |
 
 ---
 
-## Ejercicio 1: Distribución Muestral para la Media (Población Normal)
+## 🔬 Ejercicio 1: Distribución Muestral para la Media (Población Normal)
 
-### 🔍 Enunciado:
-Una fábrica de componentes electrónicos produce resistencias con vida útil distribuida normalmente (μ = 800 horas, σ = 40 horas). Semanalmente se analiza una muestra de 64 resistencias para verificar cumplimiento de estándares. La gerencia requiere comprender el comportamiento estadístico de estas muestras.
+### 📝 Enunciado:
+Una fábrica produce resistencias con vida útil normalmente distribuida (μ = 800 horas, σ = 40 horas). Se analiza una muestra de 64 resistencias semanalmente.
 
-### 📊 Incisos:
+### 🔍 Solución Manual:
 
-#### a) Probabilidad de vida media inferior a 790 horas
-- **Explicación:** Calcula la probabilidad de encontrar muestras con desempeño significativamente inferior, alertando sobre posibles fallas en lotes.
-- **Fórmula:**  
-  $$Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} = \frac{790 - 800}{40 / \sqrt{64}} = -2.0$$
-- **Interpretación:** Un Z-score de -2.0 indica que 790 horas está a 2 errores estándar debajo de la media. Solo el 2.28% de muestras mostrarían este comportamiento si el proceso está controlado.
+#### a) Probabilidad de vida media < 790 horas
+**Paso 1:** Calcular error estándar  
+$$\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}} = \frac{40}{\sqrt{64}} = \frac{40}{8} = 5$$
+
+**Paso 2:** Calcular Z  
+$$Z = \frac{\bar{X} - \mu}{\sigma_{\bar{X}}} = \frac{790 - 800}{5} = \frac{-10}{5} = -2.0$$
+
+**Paso 3:** Buscar en tabla Z  
+- P(Z < -2.0) = 0.0228 (área bajo curva normal estándar)
+
+**📌 Conclusión:**  
+Probabilidad = 0.0228 (2.28%)
+
+---
 
 #### b) Probabilidad entre 790 y 810 horas
-- **Explicación:** Determina la proporción de muestras "típicas" que reflejan fielmente la calidad real del proceso.
-- **Interpretación:** 95.44% de muestras caen en este rango, validando que con n=64, el muestreo captura efectivamente la calidad real (±10 horas de μ).
+**Paso 1:** Calcular Z para 810  
+$$Z = \frac{810 - 800}{5} = \frac{10}{5} = 2.0$$
 
+**Paso 2:** Buscar en tabla Z  
+- P(Z < 2.0) = 0.9772  
+- P(Z < -2.0) = 0.0228  
+
+**Paso 3:** Calcular diferencia  
+$$P(790 < \bar{X} < 810) = 0.9772 - 0.0228 = 0.9544$$
+
+**📌 Conclusión:**  
+Probabilidad = 0.9544 (95.44%)
 
 ---
 
-## Ejercicio 2: Distribución Muestral para la Proporción (Población Normal)
+#### c) Límites del 95% de confianza
+**Paso 1:** Identificar Z crítico  
+- Para 95% confianza: Z = 1.96  
 
-### 🔍 Enunciado:
-Estudio en universidades estatales revela que 35% de estudiantes usa transporte público. Para evaluar políticas de movilidad, se encuestan grupos de 100 estudiantes en distintos campus.
+**Paso 2:** Calcular límites  
+$$\text{Límite inferior} = \mu - Z \cdot \sigma_{\bar{X}} = 800 - 1.96 \times 5 = 790.2$$  
+$$\text{Límite superior} = \mu + Z \cdot \sigma_{\bar{X}} = 800 + 1.96 \times 5 = 809.8$$
 
-### 📊 Incisos:
+**📌 Conclusión:**  
+Intervalo: [790.2, 809.8] horas
+
+---
+
+## 📈 Ejercicio 2: Distribución Muestral para la Proporción
+
+### 📝 Enunciado:
+35% de estudiantes usa transporte público. Se encuestan grupos de 100 estudiantes.
+
+### 🔍 Solución Manual:
 
 #### a) Probabilidad de proporción muestral < 30%
-- **Explicación:** Examina el riesgo de subestimar el uso real de transporte público en muestras pequeñas.
-- **Fórmula:**  
-  $$\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{0.35 \times 0.65}{100}} \approx 0.048$$
-- **Interpretación:** 14.66% de probabilidad indica que en 1 de cada 7 muestras, la proporción observada subestima en >5% el valor real.
+**Paso 1:** Verificar normalidad  
+$$np = 100 \times 0.35 = 35 \geq 5$$  
+$$n(1-p) = 100 \times 0.65 = 65 \geq 5$$  
+→ Se aproxima a normal  
+
+**Paso 2:** Calcular error estándar  
+$$\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{0.35 \times 0.65}{100}} = \sqrt{0.002275} \approx 0.0477$$
+
+**Paso 3:** Calcular Z  
+$$Z = \frac{\hat{p} - p}{\sigma_{\hat{p}}} = \frac{0.30 - 0.35}{0.0477} \approx -1.048$$
+
+**Paso 4:** Buscar en tabla Z  
+- P(Z < -1.05) ≈ 0.1469  
+
+**📌 Conclusión:**  
+Probabilidad ≈ 0.1469 (14.69%)
+
+---
 
 #### b) Probabilidad entre 30% y 40%
-- **Explicación:** Evalúa confiabilidad de encuestas para reflejar realidad poblacional.
-- **Interpretación:** 70.63% de muestras capturan el valor real dentro de ±5%, validando que n=100 es adecuado para estimaciones con margen aceptable.
+**Paso 1:** Calcular Z para 40%  
+$$Z = \frac{0.40 - 0.35}{0.0477} \approx 1.048$$
 
+**Paso 2:** Buscar en tabla Z  
+- P(Z < 1.05) ≈ 0.8531  
+- P(Z < -1.05) ≈ 0.1469  
+
+**Paso 3:** Calcular diferencia  
+$$P(0.30 < \hat{p} < 0.40) = 0.8531 - 0.1469 = 0.7062$$
+
+**📌 Conclusión:**  
+Probabilidad ≈ 0.7062 (70.62%)
 
 ---
 
-## Ejercicio 3: Diferencia de Medias (Dos Poblaciones Normales)
+#### c) Intervalo del 99% de confianza
+**Paso 1:** Identificar Z crítico  
+- Para 99% confianza: Z = 2.576  
 
-### 🔍 Enunciado:
-Laboratorio farmacéutico compara antihipertensivos (Fármaco A: μ=120 mg/dL, σ=15; Fármaco B: μ=115 mg/dL, σ=12). Ensayo con 50 pacientes por grupo analiza diferencias en reducción de colesterol.
+**Paso 2:** Calcular límites  
+$$\text{Límite inferior} = p - Z \cdot \sigma_{\hat{p}} = 0.35 - 2.576 \times 0.0477 \approx 0.227$$  
+$$\text{Límite superior} = p + Z \cdot \sigma_{\hat{p}} = 0.35 + 2.576 \times 0.0477 \approx 0.473$$
 
-### 📊 Incisos:
+**📌 Conclusión:**  
+Intervalo: [0.227, 0.473]
+
+---
+
+## ⚗️ Ejercicio 3: Diferencia de Medias (Dos Poblaciones)
+
+### 📝 Enunciado:
+Comparación de antihipertensivos (Fármaco A: μ=120 mg/dL, σ=15; Fármaco B: μ=115 mg/dL, σ=12). Muestras de 50 pacientes cada grupo.
+
+### 🔍 Solución Manual:
 
 #### a) Probabilidad de diferencia > 8 mg/dL
-- **Explicación:** Evalúa probabilidad de que Fármaco A parezca significativamente más efectivo por variabilidad muestral.
-- **Fórmula:**  
-  $$\sigma_{\bar{X_A}-\bar{X_B}} = \sqrt{\frac{15^2}{50} + \frac{12^2}{50}} \approx 2.74$$
-- **Interpretación:** 11.93% de probabilidad indica que en casi 1 de cada 8 ensayos, se exageraría la diferencia real en >60%.
+**Paso 1:** Calcular diferencia poblacional  
+$$\mu_A - \mu_B = 120 - 115 = 5$$
 
-#### b) Probabilidad entre 4 y 7 mg/dL
-- **Explicación:** Determina frecuencia con que muestras reflejan fielmente ventaja real del Fármaco A (5 mg/dL).
-- **Interpretación:** 41.48% de muestras muestran diferencias moderadas (4-7 mg/dL), sugiriendo necesidad de muestras mayores para precisión.
+**Paso 2:** Calcular error estándar  
+$$\sigma_{\bar{X}_A - \bar{X}_B} = \sqrt{\frac{\sigma_A^2}{n_A} + \frac{\sigma_B^2}{n_B}} = \sqrt{\frac{15^2}{50} + \frac{12^2}{50}} = \sqrt{4.5 + 2.88} \approx 2.717$$
 
-#### c) Intervalo del 90% para diferencia real
-- **Explicación:** Proporciona rango de valores plausibles para verdadera diferencia terapéutica.
-- **Interpretación:** [0.49, 9.51] mg/dL indica superioridad de Fármaco A (no incluye 0), pero con gran incertidumbre en magnitud.
+**Paso 3:** Calcular Z  
+$$Z = \frac{(\bar{X}_A - \bar{X}_B) - (\mu_A - \mu_B)}{\sigma_{\bar{X}_A - \bar{X}_B}} = \frac{8 - 5}{2.717} \approx 1.104$$
+
+**Paso 4:** Buscar en tabla Z  
+- P(Z > 1.10) = 1 - 0.8643 = 0.1357  
+
+**📌 Conclusión:**  
+Probabilidad ≈ 0.1357 (13.57%)
 
 ---
 
-## Ejercicio 4: Diferencia de Proporciones (Dos Poblaciones Normales)
+#### b) Probabilidad entre 4 y 7 mg/dL
+**Paso 1:** Calcular Z para 4 y 7  
+$$Z_4 = \frac{4 - 5}{2.717} \approx -0.368$$  
+$$Z_7 = \frac{7 - 5}{2.717} \approx 0.736$$
 
-### 🔍 Enunciado:
-Consultora política mide aprobación presidencial en Norte (p=0.48) y Sur (p=0.42). Previo a elecciones, encuestas de 200 personas por región detectan cambios significativos.
+**Paso 2:** Buscar en tabla Z  
+- P(Z < 0.74) ≈ 0.7704  
+- P(Z < -0.37) ≈ 0.3557  
 
-### 📊 Incisos:
+**Paso 3:** Calcular diferencia  
+$$P(4 < D < 7) = 0.7704 - 0.3557 = 0.4147$$
+
+**📌 Conclusión:**  
+Probabilidad ≈ 0.4147 (41.47%)
+
+---
+
+#### c) Intervalo del 90% para diferencia real
+**Paso 1:** Identificar Z crítico  
+- Para 90% confianza: Z = 1.645  
+
+**Paso 2:** Calcular límites  
+$$\text{Límite inferior} = 5 - 1.645 \times 2.717 \approx 0.53$$  
+$$\text{Límite superior} = 5 + 1.645 \times 2.717 \approx 9.47$$
+
+**📌 Conclusión:**  
+Intervalo: [0.53, 9.47] mg/dL
+
+---
+
+## 🗳️ Ejercicio 4: Diferencia de Proporciones
+
+### 📝 Enunciado:
+Aprobación presidencial en Norte (p=0.48) y Sur (p=0.42). Encuestas de 200 personas por región.
+
+### 🔍 Solución Manual:
 
 #### a) Probabilidad de diferencia > 10%
-- **Explicación:** Cuantifica riesgo de sobreestimar diferencias regionales por error muestral.
-- **Interpretación:** 4.00% de probabilidad indica que solo en 1 de 25 encuestas se exageraría la brecha al doble de su valor real (6%→12%).
+**Paso 1:** Calcular diferencia poblacional  
+$$p_N - p_S = 0.48 - 0.42 = 0.06$$
+
+**Paso 2:** Calcular error estándar  
+$$\sigma_{\hat{p}_N - \hat{p}_S} = \sqrt{\frac{p_N(1-p_N)}{n_N} + \frac{p_S(1-p_S)}{n_S}} = \sqrt{\frac{0.48 \times 0.52}{200} + \frac{0.42 \times 0.58}{200}} \approx \sqrt{0.001248 + 0.001218} \approx 0.0497$$
+
+**Paso 3:** Calcular Z  
+$$Z = \frac{0.10 - 0.06}{0.0497} \approx 0.805$$
+
+**Paso 4:** Buscar en tabla Z  
+- P(Z > 0.80) = 1 - 0.7881 = 0.2119  
+
+**📌 Conclusión:**  
+Probabilidad ≈ 0.2119 (21.19%)
+
+---
 
 #### b) Probabilidad de diferencia < 2%
-- **Explicación:** Evalúa riesgo de que encuestas oculten diferencias reales entre regiones.
-- **Interpretación:** 20.66% de probabilidad muestra que en 1 de cada 5 muestras, la brecha parecería insignificante (<2%) aunque exista.
+**Paso 1:** Calcular Z  
+$$Z = \frac{0.02 - 0.06}{0.0497} \approx -0.805$$
+
+**Paso 2:** Buscar en tabla Z  
+- P(Z < -0.80) = 0.2119  
+
+**📌 Conclusión:**  
+Probabilidad ≈ 0.2119 (21.19%)
+
+---
+
+#### c) Intervalo del 95% para diferencia poblacional
+**Paso 1:** Identificar Z crítico  
+- Para 95% confianza: Z = 1.96  
+
+**Paso 2:** Calcular límites  
+$$\text{Límite inferior} = 0.06 - 1.96 \times 0.0497 \approx -0.037$$  
+$$\text{Límite superior} = 0.06 + 1.96 \times 0.0497 \approx 0.157$$
+
+**📌 Conclusión:**  
+Intervalo: [-0.037, 0.157]
+
+---
+
+## 📚 Apéndice: Tabla Z Estándar (Valores Seleccionados)
+| Z      | 0.00   | 0.05   | 0.10   | ...    |
+|--------|--------|--------|--------|--------|
+| -2.0   | 0.0228 | 0.0202 | 0.0179 | ...    |
+| -1.5   | 0.0668 | 0.0606 | 0.0548 | ...    |
+| -1.0   | 0.1587 | 0.1469 | 0.1357 | ...    |
+| 0.0    | 0.5000 | 0.4801 | 0.4602 | ...    |
+| 1.0    | 0.8413 | 0.8531 | 0.8643 | ...    |
+| 1.5    | 0.9332 | 0.9394 | 0.9452 | ...    |
+| 2.0    | 0.9772 | 0.9798 | 0.9821 | ...    |
+
+*Nota: Los valores mostrados corresponden a la distribución acumulada estándar Φ(z)*
+
+## 💡 Conclusiones Generales
+1. **Tamaño muestral:** Determina directamente la precisión de las estimaciones
+2. **Distribución normal:** Herramienta fundamental para modelar comportamientos muestrales
+3. **Intervalos de confianza:** Proporcionan rangos prácticos para toma de decisiones
+4. **Comparaciones entre poblaciones:** Requieren considerar la variabilidad conjunta
+5. **Interpretación contextual:** Los resultados estadísticos deben evaluarse junto a consideraciones prácticas
