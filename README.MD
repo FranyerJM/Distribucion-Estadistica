@@ -5,14 +5,14 @@
 | Estudiante         | Cédula      |
 |--------------------|-------------|
 | Franyer Marin      | 32.293.396  |
-| Nombre Apellido    | CÉDULA      |
+| Ricardo Alzurutt   | 25.971.680  |
 
 ---
 
 ## 🔬 Ejercicio 1: Distribución Muestral para la Media (Población Normal)
 
 ### 📝 Enunciado:
-Una fábrica produce resistencias con vida útil normalmente distribuida (μ = 800 horas, σ = 40 horas). Se analiza una muestra de 64 resistencias semanalmente.
+Una fábrica de componentes electrónicos produce resistencias con vida útil distribuida normalmente (μ = 800 horas, σ = 40 horas). Semanalmente se analiza una muestra de 64 resistencias para verificar cumplimiento de estándares. La gerencia requiere comprender el comportamiento estadístico de estas muestras.
 
 ### 🔍 Solución Manual:
 
@@ -28,6 +28,7 @@ $$Z = \frac{\bar{X} - \mu}{\sigma_{\bar{X}}} = \frac{790 - 800}{5} = \frac{-10}{
 
 **📌 Conclusión:**  
 Probabilidad = 0.0228 (2.28%)
+
 
 ---
 
@@ -47,23 +48,27 @@ Probabilidad = 0.9544 (95.44%)
 
 ---
 
-#### c) Límites del 95% de confianza
-**Paso 1:** Identificar Z crítico  
-- Para 95% confianza: Z = 1.96  
+#### c) Probabilidad de vida media superior a 815 horas
+**Paso 1:** Calcular error estándar  
+$$\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}} = \frac{40}{\sqrt{64}} = 5$$
 
-**Paso 2:** Calcular límites  
-$$\text{Límite inferior} = \mu - Z \cdot \sigma_{\bar{X}} = 800 - 1.96 \times 5 = 790.2$$  
-$$\text{Límite superior} = \mu + Z \cdot \sigma_{\bar{X}} = 800 + 1.96 \times 5 = 809.8$$
+**Paso 2:** Calcular Z  
+$$Z = \frac{\bar{X} - \mu}{\sigma_{\bar{X}}} = \frac{815 - 800}{5} = 3.0$$
+
+**Paso 3:** Buscar en tabla Z  
+- P(Z > 3.0) = 1 - \Phi(3.0) \approx 0.0013
 
 **📌 Conclusión:**  
-Intervalo: [790.2, 809.8] horas
+Probabilidad ≈ 0.0013 (0.13%). Valores tan extremos sugieren anomalías en el proceso o mediciones atípicas.
+
+
 
 ---
 
 ## 📈 Ejercicio 2: Distribución Muestral para la Proporción
 
 ### 📝 Enunciado:
-35% de estudiantes usa transporte público. Se encuestan grupos de 100 estudiantes.
+Estudio en universidades estatales revela que 35% de estudiantes usa transporte público. Para evaluar políticas de movilidad, se encuestan grupos de 100 estudiantes en distintos campus.
 
 ### 🔍 Solución Manual:
 
@@ -103,23 +108,30 @@ Probabilidad ≈ 0.7062 (70.62%)
 
 ---
 
-#### c) Intervalo del 99% de confianza
-**Paso 1:** Identificar Z crítico  
-- Para 99% confianza: Z = 2.576  
+#### c) Probabilidad de proporción muestral > 42%
+**Paso 1:** Verificar normalidad  
+$$np = 100 \times 0.35 = 35 \geq 5$$  
+$$n(1-p) = 100 \times 0.65 = 65 \geq 5$$  
+→ Aproximación válida
 
-**Paso 2:** Calcular límites  
-$$\text{Límite inferior} = p - Z \cdot \sigma_{\hat{p}} = 0.35 - 2.576 \times 0.0477 \approx 0.227$$  
-$$\text{Límite superior} = p + Z \cdot \sigma_{\hat{p}} = 0.35 + 2.576 \times 0.0477 \approx 0.473$$
+**Paso 2:** Calcular error estándar  
+$$\sigma_{\hat{p}}} = \sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{0.35 \times 0.65}{100}} \approx 0.0477$$
+
+**Paso 3:** Calcular Z  
+$$Z = \frac{\hat{p} - p}{\sigma_{\hat{p}}}} = \frac{0.42 - 0.35}{0.0477} \approx 1.47$$
+
+**Paso 4:** Buscar en tabla Z  
+- P(Z > 1.47) ≈ 1 - 0.9292 = 0.0708
 
 **📌 Conclusión:**  
-Intervalo: [0.227, 0.473]
+Probabilidad ≈ 0.0708 (7.08%). Esto indica que en ~7% de las muestras se sobreestimaría el uso real en ≥7 puntos porcentuales.
 
 ---
 
 ## ⚗️ Ejercicio 3: Diferencia de Medias (Dos Poblaciones)
 
 ### 📝 Enunciado:
-Comparación de antihipertensivos (Fármaco A: μ=120 mg/dL, σ=15; Fármaco B: μ=115 mg/dL, σ=12). Muestras de 50 pacientes cada grupo.
+Laboratorio farmacéutico compara antihipertensivos (Fármaco A: μ=120 mg/dL, σ=15; Fármaco B: μ=115 mg/dL, σ=12). Ensayo con 50 pacientes por grupo analiza diferencias en reducción de colesterol.
 
 ### 🔍 Solución Manual:
 
@@ -131,7 +143,14 @@ $$\mu_A - \mu_B = 120 - 115 = 5$$
 $$\sigma_{\bar{X}_A - \bar{X}_B} = \sqrt{\frac{\sigma_A^2}{n_A} + \frac{\sigma_B^2}{n_B}} = \sqrt{\frac{15^2}{50} + \frac{12^2}{50}} = \sqrt{4.5 + 2.88} \approx 2.717$$
 
 **Paso 3:** Calcular Z  
-$$Z = \frac{(\bar{X}_A - \bar{X}_B) - (\mu_A - \mu_B)}{\sigma_{\bar{X}_A - \bar{X}_B}} = \frac{8 - 5}{2.717} \approx 1.104$$
+
+$$\text{Numerador} = (\bar{X}_A - \bar{X}_B) - (\mu_A - \mu_B) = 8 - 5 = 3
+
+$$\sigma_D = \sqrt{\frac{\sigma_A^2}{n_A} + \frac{\sigma_B^2}{n_B}} = \sqrt{\frac{15^2}{50} + \frac{12^2}{50}} = \sqrt{4.5 + 2.88} = \sqrt{7.38} \approx 2.717
+
+
+$$Z = \frac{\text{Numerador}}{\sigma_D} = \frac{3}{2.717} \approx 1.104
+
 
 **Paso 4:** Buscar en tabla Z  
 - P(Z > 1.10) = 1 - 0.8643 = 0.1357  
@@ -174,7 +193,7 @@ Intervalo: [0.53, 9.47] mg/dL
 ## 🗳️ Ejercicio 4: Diferencia de Proporciones
 
 ### 📝 Enunciado:
-Aprobación presidencial en Norte (p=0.48) y Sur (p=0.42). Encuestas de 200 personas por región.
+Consultora política mide aprobación presidencial en Norte (p=0.48) y Sur (p=0.42). Previo a elecciones, encuestas de 200 personas por región detectan cambios significativos.
 
 ### 🔍 Solución Manual:
 
@@ -208,16 +227,23 @@ Probabilidad ≈ 0.2119 (21.19%)
 
 ---
 
-#### c) Intervalo del 95% para diferencia poblacional
-**Paso 1:** Identificar Z crítico  
-- Para 95% confianza: Z = 1.96  
+#### c) Probabilidad de diferencia entre 4% y 8%
+**Paso 1:** Calcular error estándar  
+$$\sigma_{D}} = \sqrt{\frac{p_N(1-p_N)}{n_N} + \frac{p_S(1-p_S)}{n_S}}} \approx 0.0497$$
 
-**Paso 2:** Calcular límites  
-$$\text{Límite inferior} = 0.06 - 1.96 \times 0.0497 \approx -0.037$$  
-$$\text{Límite superior} = 0.06 + 1.96 \times 0.0497 \approx 0.157$$
+**Paso 2:** Calcular Z para 4% y 8%  
+$$Z_{4\%} = \frac{0.04 - 0.06}{0.0497} \approx -0.40$$  
+$$Z_{8\%} = \frac{0.08 - 0.06}{0.0497} \approx 0.40$$
+
+**Paso 3:** Buscar en tabla Z  
+- P(Z < 0.40) ≈ 0.6554  
+- P(Z < -0.40) ≈ 0.3446  
+
+**Paso 4:** Calcular diferencia  
+$$P(0.04 < D < 0.08) = 0.6554 - 0.3446 = 0.3108$$
 
 **📌 Conclusión:**  
-Intervalo: [-0.037, 0.157]
+Probabilidad ≈ 0.3108 (31.08%). Esto muestra que en ~31% de las encuestas, la brecha observada subestimaría la diferencia real (6%) en un 33-50%.
 
 ---
 
@@ -233,10 +259,3 @@ Intervalo: [-0.037, 0.157]
 | 2.0    | 0.9772 | 0.9798 | 0.9821 | ...    |
 
 *Nota: Los valores mostrados corresponden a la distribución acumulada estándar Φ(z)*
-
-## 💡 Conclusiones Generales
-1. **Tamaño muestral:** Determina directamente la precisión de las estimaciones
-2. **Distribución normal:** Herramienta fundamental para modelar comportamientos muestrales
-3. **Intervalos de confianza:** Proporcionan rangos prácticos para toma de decisiones
-4. **Comparaciones entre poblaciones:** Requieren considerar la variabilidad conjunta
-5. **Interpretación contextual:** Los resultados estadísticos deben evaluarse junto a consideraciones prácticas
