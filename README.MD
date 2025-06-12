@@ -1,4 +1,12 @@
-# Ejercicios Extendidos con Explicaciones Detalladas
+# Ejercicios Estadistica
+
+## Autores
+
+| Estudiante | Cedula  |
+| :-------- | :------- |
+| `Franyer Marin` | `32.293.396` | 
+| `Nombre Apellido` | `CEDULA` | 
+
 
 ---
 
