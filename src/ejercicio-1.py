@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
-# Parámetros
+# Parametros
 mu, sigma, n = 800, 40, 64
-se = sigma / np.sqrt(n)  # Error estándar
+se = sigma / np.sqrt(n)  # Error estandar
 
 # a) P(X̄ < 790)
 prob_a = norm.cdf(790, mu, se)
@@ -14,7 +14,7 @@ prob_b = norm.cdf(810, mu, se) - norm.cdf(790, mu, se)
 
 # c) falta
 
-# Gráfico
+# Grafico
 x = np.linspace(mu - 4*se, mu + 4*se, 1000)
 y = norm.pdf(x, mu, se)
 plt.plot(x, y, 'b-')

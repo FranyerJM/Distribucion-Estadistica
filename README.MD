@@ -4,10 +4,10 @@
 
 ## Ejercicio 1: Distribución Muestral para la Media (Población Normal)
 
-### 🔍 Contexto ampliado:
+### 🔍 Enunciado:
 Una fábrica de componentes electrónicos produce resistencias con vida útil distribuida normalmente (μ = 800 horas, σ = 40 horas). Semanalmente se analiza una muestra de 64 resistencias para verificar cumplimiento de estándares. La gerencia requiere comprender el comportamiento estadístico de estas muestras.
 
-### 📊 Partes detalladas:
+### 📊 Incisos:
 
 #### a) Probabilidad de vida media inferior a 790 horas
 - **Explicación:** Calcula la probabilidad de encontrar muestras con desempeño significativamente inferior, alertando sobre posibles fallas en lotes.
@@ -24,10 +24,10 @@ Una fábrica de componentes electrónicos produce resistencias con vida útil di
 
 ## Ejercicio 2: Distribución Muestral para la Proporción (Población Normal)
 
-### 🔍 Contexto ampliado:
+### 🔍 Enunciado:
 Estudio en universidades estatales revela que 35% de estudiantes usa transporte público. Para evaluar políticas de movilidad, se encuestan grupos de 100 estudiantes en distintos campus.
 
-### 📊 Partes detalladas:
+### 📊 Incisos:
 
 #### a) Probabilidad de proporción muestral < 30%
 - **Explicación:** Examina el riesgo de subestimar el uso real de transporte público en muestras pequeñas.
@@ -44,10 +44,10 @@ Estudio en universidades estatales revela que 35% de estudiantes usa transporte 
 
 ## Ejercicio 3: Diferencia de Medias (Dos Poblaciones Normales)
 
-### 🔍 Contexto ampliado:
+### 🔍 Enunciado:
 Laboratorio farmacéutico compara antihipertensivos (Fármaco A: μ=120 mg/dL, σ=15; Fármaco B: μ=115 mg/dL, σ=12). Ensayo con 50 pacientes por grupo analiza diferencias en reducción de colesterol.
 
-### 📊 Partes detalladas:
+### 📊 Incisos:
 
 #### a) Probabilidad de diferencia > 8 mg/dL
 - **Explicación:** Evalúa probabilidad de que Fármaco A parezca significativamente más efectivo por variabilidad muestral.
@@ -67,10 +67,10 @@ Laboratorio farmacéutico compara antihipertensivos (Fármaco A: μ=120 mg/dL, �
 
 ## Ejercicio 4: Diferencia de Proporciones (Dos Poblaciones Normales)
 
-### 🔍 Contexto ampliado:
+### 🔍 Enunciado:
 Consultora política mide aprobación presidencial en Norte (p=0.48) y Sur (p=0.42). Previo a elecciones, encuestas de 200 personas por región detectan cambios significativos.
 
-### 📊 Partes detalladas:
+### 📊 Incisos:
 
 #### a) Probabilidad de diferencia > 10%
 - **Explicación:** Cuantifica riesgo de sobreestimar diferencias regionales por error muestral.

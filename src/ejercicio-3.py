@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
-# Parámetros
+# Parametros
 mu_A, sigma_A, n_A = 120, 15, 50
 mu_B, sigma_B, n_B = 115, 12, 50
-se_diff = np.sqrt(sigma_A**2 / n_A + sigma_B**2 / n_B)  # Error estándar
+se_diff = np.sqrt(sigma_A**2 / n_A + sigma_B**2 / n_B)  # Error estandar
 
 # a) P(D > 8)
 prob_a_diff = 1 - norm.cdf(8, mu_A - mu_B, se_diff)
@@ -18,7 +18,7 @@ prob_b_diff = norm.cdf(7, mu_A - mu_B, se_diff) - norm.cdf(4, mu_A - mu_B, se_di
 # lower_diff = (mu_A - mu_B) - z_critical_diff * se_diff
 # upper_diff = (mu_A - mu_B) + z_critical_diff * se_diff
 
-# Gráfico
+# Grafico
 x_diff = np.linspace(-10, 20, 1000)
 y_diff = norm.pdf(x_diff, mu_A - mu_B, se_diff)
 plt.plot(x_diff, y_diff, 'b-')

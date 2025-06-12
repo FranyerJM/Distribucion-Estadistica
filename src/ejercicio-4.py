@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
-# Parámetros
+# Parametros
 p_N, n_N = 0.48, 200
 p_S, n_S = 0.42, 200
-se_diff_p = np.sqrt(p_N*(1-p_N)/n_N + p_S*(1-p_S)/n_S)  # Error estándar
+se_diff_p = np.sqrt(p_N*(1-p_N)/n_N + p_S*(1-p_S)/n_S)  # Error estandar
 
 # a) P(D_p > 0.10)
 prob_a_diff_p = 1 - norm.cdf(0.10, p_N - p_S, se_diff_p)
@@ -15,7 +15,7 @@ prob_b_diff_p = norm.cdf(0.02, p_N - p_S, se_diff_p)
 
 # c) falta
 
-# Gráfico
+# Grafico
 x_diff_p = np.linspace(-0.15, 0.25, 1000)
 y_diff_p = norm.pdf(x_diff_p, p_N - p_S, se_diff_p)
 plt.plot(x_diff_p, y_diff_p, 'b-')
