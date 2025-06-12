@@ -131,7 +131,12 @@ $$\mu_A - \mu_B = 120 - 115 = 5$$
 $$\sigma_{\bar{X}_A - \bar{X}_B} = \sqrt{\frac{\sigma_A^2}{n_A} + \frac{\sigma_B^2}{n_B}} = \sqrt{\frac{15^2}{50} + \frac{12^2}{50}} = \sqrt{4.5 + 2.88} \approx 2.717$$
 
 **Paso 3:** Calcular Z  
-$$Z = \frac{(\bar{X}_A - \bar{X}_B) - (\mu_A - \mu_B)}{\sigma_{\bar{X}_A - \bar{X}_B}} = \frac{8 - 5}{2.717} \approx 1.104$$
+$$\text{Numerador} = (\bar{X}_A - \bar{X}_B) - (\mu_A - \mu_B) = 8 - 5 = 3
+
+$$\sigma_D = \sqrt{\frac{\sigma_A^2}{n_A} + \frac{\sigma_B^2}{n_B}} = \sqrt{\frac{15^2}{50} + \frac{12^2}{50}} = \sqrt{4.5 + 2.88} = \sqrt{7.38} \approx 2.717
+
+
+$$Z = \frac{\text{Numerador}}{\sigma_D} = \frac{3}{2.717} \approx 1.104
 
 **Paso 4:** Buscar en tabla Z  
 - P(Z > 1.10) = 1 - 0.8643 = 0.1357  
