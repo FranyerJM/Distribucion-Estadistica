@@ -115,10 +115,10 @@ $$n(1-p) = 100 \times 0.65 = 65 \geq 5$$
 → Aproximación válida
 
 **Paso 2:** Calcular error estándar  
-$$\sigma_{\hat{p}}} = \sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{0.35 \times 0.65}{100}} \approx 0.0477$$
+$$\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{0.35 \times 0.65}{100}} \approx 0.0477$$
 
 **Paso 3:** Calcular Z  
-$$Z = \frac{\hat{p} - p}{\sigma_{\hat{p}}}} = \frac{0.42 - 0.35}{0.0477} \approx 1.47$$
+$$Z = \frac{\hat{p} - p}{\sigma_{\hat{p}}} = \frac{0.42 - 0.35}{0.0477} \approx 1.47$$
 
 **Paso 4:** Buscar en tabla Z  
 - P(Z > 1.47) ≈ 1 - 0.9292 = 0.0708
@@ -229,11 +229,11 @@ Probabilidad ≈ 0.2119 (21.19%)
 
 #### c) Probabilidad de diferencia entre 4% y 8%
 **Paso 1:** Calcular error estándar  
-$$\sigma_{D}} = \sqrt{\frac{p_N(1-p_N)}{n_N} + \frac{p_S(1-p_S)}{n_S}}} \approx 0.0497$$
+$$\sigma_{D} = \sqrt{\frac{p_N(1-p_N)}{n_N} + \frac{p_S(1-p_S)}{n_S}}} \approx 0.0497$$
 
 **Paso 2:** Calcular Z para 4% y 8%  
-$$Z_{4\%} = \frac{0.04 - 0.06}{0.0497} \approx -0.40$$  
-$$Z_{8\%} = \frac{0.08 - 0.06}{0.0497} \approx 0.40$$
+$$Z_{0.04} = \frac{0.04 - 0.06}{0.0497} \approx -0.40 $$  
+$$Z_{0.08} = \frac{0.08 - 0.06}{0.0497} \approx 0.40$$
 
 **Paso 3:** Buscar en tabla Z  
 - P(Z < 0.40) ≈ 0.6554  
