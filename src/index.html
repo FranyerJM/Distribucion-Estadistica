@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Estadística con Gráficos</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 2rem;
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        canvas {
+            max-height: 400px;
+            margin-top: 1.5rem;
+        }
+        .nav-tabs .nav-link {
+            color: #495057;
+        }
+        .nav-tabs .nav-link.active {
+            color: #0d6efd;
+            background-color: #fff;
+            border-color: #dee2e6 #dee2e6 #fff;
+        }
+        .results {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e9ecef;
+            border-radius: 6px;
+        }
+        .results p {
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="mb-4 text-center">Calculadora de Distribuciones Muestrales</h1>
+        
+        <ul class="nav nav-tabs" id="ejerciciosTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="ej1-tab" data-bs-toggle="tab" data-bs-target="#ejercicio1" type="button" role="tab">Ejercicio 1</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ej2-tab" data-bs-toggle="tab" data-bs-target="#ejercicio2" type="button" role="tab">Ejercicio 2</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ej3-tab" data-bs-toggle="tab" data-bs-target="#ejercicio3" type="button" role="tab">Ejercicio 3</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ej4-tab" data-bs-toggle="tab" data-bs-target="#ejercicio4" type="button" role="tab">Ejercicio 4</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="ejerciciosTabContent">
+            <div class="tab-pane fade show active" id="ejercicio1" role="tabpanel">
+                <h3 class="mt-4">Ejercicio 1: Distribución Muestral de la Media</h3>
+                <p>Una población tiene una media $\mu = 800$ y una desviación estándar $\sigma = 40$. Se toma una muestra aleatoria de tamaño $n = 64$. Calcular las probabilidades sobre la media muestral $\bar{X}$.</p>
+                <div id="resultados_1" class="results"></div>
+                <canvas id="grafico_1"></canvas>
+            </div>
+
+            <div class="tab-pane fade" id="ejercicio2" role="tabpanel">
+                <h3 class="mt-4">Ejercicio 2: Distribución Muestral de la Proporción</h3>
+                <p>Se sabe que la proporción poblacional de un evento es $p = 0.35$. Se toma una muestra de tamaño $n = 100$. Calcular las probabilidades sobre la proporción muestral $\hat{p}$.</p>
+                <div id="resultados_2" class="results"></div>
+                <canvas id="grafico_2"></canvas>
+            </div>
+
+            <div class="tab-pane fade" id="ejercicio3" role="tabpanel">
+                <h3 class="mt-4">Ejercicio 3: Distribución Muestral de la Diferencia de Medias</h3>
+                <p>Se comparan dos poblaciones A y B con los siguientes datos: $\mu_A = 120, \sigma_A = 15, n_A = 50$ y $\mu_B = 115, \sigma_B = 12, n_B = 50$. Calcular probabilidades sobre la diferencia de medias muestrales $D = \bar{X}_A - \bar{X}_B$.</p>
+                <div id="resultados_3" class="results"></div>
+                <canvas id="grafico_3"></canvas>
+            </div>
+
+            <div class="tab-pane fade" id="ejercicio4" role="tabpanel">
+                <h3 class="mt-4">Ejercicio 4: Distribución Muestral de la Diferencia de Proporciones</h3>
+                <p>Se comparan las proporciones de dos poblaciones (Norte y Sur): $p_N = 0.48, n_N = 200$ y $p_S = 0.42, n_S = 200$. Calcular probabilidades sobre la diferencia de proporciones muestrales $D_p = \hat{p}_N - \hat{p}_S$.</p>
+                <div id="resultados_4" class="results"></div>
+                <canvas id="grafico_4"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jstat@1.9.6/dist/jstat.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
+
+
+    <script>
+        // Variable global para mantener la instancia del gráfico y poder destruirla al cambiar de pestaña
+        let currentChart = null;
+
+        // Función para renderizar el gráfico y los resultados
+        function renderChart(config) {
+            // Si ya existe un gráfico, lo destruimos para evitar solapamientos y fugas de memoria
+            if (currentChart) {
+                currentChart.destroy();
+            }
+
+            // Mostramos los resultados calculados
+            const resultsContainer = document.getElementById(config.resultsId);
+            resultsContainer.innerHTML = config.resultsHTML;
+
+            // Creamos el nuevo gráfico
+            const ctx = document.getElementById(config.canvasId).getContext('2d');
+            currentChart = new Chart(ctx, {
+                type: 'line',
+                data: config.chartData,
+                options: config.chartOptions
+            });
+        }
+
+        function ejercicio_1() {
+            // Parámetros
+            const mu = 800, sigma = 40, n = 64;
+            const se = sigma / Math.sqrt(n);
+
+            // Cálculos de probabilidad usando jStat
+            const prob_a = jStat.normal.cdf(790, mu, se);
+            const prob_b = jStat.normal.cdf(810, mu, se) - jStat.normal.cdf(790, mu, se);
+            const prob_c = 1 - jStat.normal.cdf(815, mu, se);
+
+            // Preparar datos para el gráfico
+            const x = [];
+            const y = [];
+            const fill_a = [];
+            const fill_b = [];
+            const fill_c = [];
+            const start = mu - 4 * se;
+            const end = mu + 4 * se;
+            for (let i = start; i <= end; i += 0.5) {
+                x.push(i);
+                const pdfVal = jStat.normal.pdf(i, mu, se);
+                y.push(pdfVal);
+                fill_a.push(i < 790 ? pdfVal : 0);
+                fill_b.push(i >= 790 && i <= 810 ? pdfVal : 0);
+                fill_c.push(i > 815 ? pdfVal : 0);
+            }
+
+            renderChart({
+                canvasId: 'grafico_1',
+                resultsId: 'resultados_1',
+                resultsHTML: `
+                    <p>a) P(X̄ &lt; 790) = ${prob_a.toFixed(4)}</p>
+                    <p>b) P(790 &lt; X̄ &lt; 810) = ${prob_b.toFixed(4)}</p>
+                    <p>c) P(X̄ &gt; 815) = ${prob_c.toFixed(4)}</p>
+                `,
+                chartData: {
+                    labels: x,
+                    datasets: [{
+                        label: 'P(X̄ < 790)',
+                        data: fill_a,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)', // Rojo
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(790 ≤ X̄ ≤ 810)',
+                        data: fill_b,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)', // Verde
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(X̄ > 815)',
+                        data: fill_c,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(153, 102, 255, 0.5)', // Morado
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'Distribución Normal',
+                        data: y,
+                        borderColor: 'rgba(54, 162, 235, 1)', // Azul
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                chartOptions: {
+                    plugins: {
+                        title: { display: true, text: 'Distribución Muestral de la Media' },
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Horas de vida útil' } },
+                        y: { title: { display: true, text: 'Densidad' } }
+                    }
+                }
+            });
+        }
+
+        function ejercicio_2() {
+            // Parámetros
+            const p = 0.35, n = 100;
+            const se_p = Math.sqrt(p * (1 - p) / n);
+
+            // Cálculos
+            const prob_a_p = jStat.normal.cdf(0.30, p, se_p);
+            const prob_b_p = jStat.normal.cdf(0.40, p, se_p) - jStat.normal.cdf(0.30, p, se_p);
+            const prob_c_p = 1 - jStat.normal.cdf(0.42, p, se_p);
+
+            // Datos para el gráfico
+            const x = [], y = [], fill_a = [], fill_b = [], fill_c = [];
+            const start = p - 4 * se_p;
+            const end = p + 4 * se_p;
+            for (let i = start; i <= end; i += 0.001) {
+                x.push(i);
+                const pdfVal = jStat.normal.pdf(i, p, se_p);
+                y.push(pdfVal);
+                fill_a.push(i < 0.30 ? pdfVal : 0);
+                fill_b.push(i >= 0.30 && i <= 0.40 ? pdfVal : 0);
+                fill_c.push(i > 0.42 ? pdfVal : 0);
+            }
+
+            renderChart({
+                canvasId: 'grafico_2',
+                resultsId: 'resultados_2',
+                resultsHTML: `
+                    <p>a) P(p̂ &lt; 0.30) = ${prob_a_p.toFixed(4)}</p>
+                    <p>b) P(0.30 ≤ p̂ ≤ 0.40) = ${prob_b_p.toFixed(4)}</p>
+                    <p>c) P(p̂ &gt; 0.42) = ${prob_c_p.toFixed(4)}</p>
+                `,
+                chartData: {
+                    labels: x,
+                    datasets: [{
+                        label: 'P(p̂ < 0.30)',
+                        data: fill_a,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(0.30 ≤ p̂ ≤ 0.40)',
+                        data: fill_b,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(p̂ > 0.42)',
+                        data: fill_c,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'Distribución Normal',
+                        data: y,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                chartOptions: {
+                    plugins: {
+                        title: { display: true, text: 'Distribución Muestral de la Proporción' },
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Proporción muestral' }, ticks: { callback: val => val.toFixed(3) } },
+                        y: { title: { display: true, text: 'Densidad' } }
+                    }
+                }
+            });
+        }
+
+        function ejercicio_3() {
+            // Parámetros
+            const mu_A = 120, sigma_A = 15, n_A = 50;
+            const mu_B = 115, sigma_B = 12, n_B = 50;
+            const diff_mu = mu_A - mu_B;
+            const se_diff = Math.sqrt(sigma_A**2 / n_A + sigma_B**2 / n_B);
+
+            // Cálculos
+            const prob_a_diff = 1 - jStat.normal.cdf(8, diff_mu, se_diff);
+            const prob_b_diff = jStat.normal.cdf(7, diff_mu, se_diff) - jStat.normal.cdf(4, diff_mu, se_diff);
+            
+            // Intervalo de confianza del 90%
+            const z_critical_diff = jStat.normal.inv(0.95, 0, 1); // Z para 95% (cola superior 5%)
+            const lower_diff = diff_mu - z_critical_diff * se_diff;
+            const upper_diff = diff_mu + z_critical_diff * se_diff;
+
+            // Datos para el gráfico
+            const x = [], y = [], fill_a = [], fill_b = [];
+            const start = diff_mu - 4 * se_diff;
+            const end = diff_mu + 4 * se_diff;
+            for (let i = start; i <= end; i += 0.1) {
+                x.push(i);
+                const pdfVal = jStat.normal.pdf(i, diff_mu, se_diff);
+                y.push(pdfVal);
+                fill_a.push(i > 8 ? pdfVal : 0);
+                fill_b.push(i >= 4 && i <= 7 ? pdfVal : 0);
+            }
+
+            renderChart({
+                canvasId: 'grafico_3',
+                resultsId: 'resultados_3',
+                resultsHTML: `
+                    <p>a) P(D &gt; 8) = ${prob_a_diff.toFixed(4)}</p>
+                    <p>b) P(4 &lt; D &lt; 7) = ${prob_b_diff.toFixed(4)}</p>
+                    <p>c) Intervalo 90%: [${lower_diff.toFixed(2)}, ${upper_diff.toFixed(2)}] mg/dL</p>
+                `,
+                chartData: {
+                    labels: x,
+                    datasets: [{
+                        label: 'P(D > 8)',
+                        data: fill_a,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(4 ≤ D ≤ 7)',
+                        data: fill_b,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'Distribución Normal',
+                        data: y,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                chartOptions: {
+                    plugins: {
+                        title: { display: true, text: 'Distribución Muestral de la Diferencia de Medias' },
+                        legend: { position: 'top' },
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    xMin: lower_diff,
+                                    xMax: lower_diff,
+                                    borderColor: 'rgba(153, 102, 255, 1)',
+                                    borderWidth: 2,
+                                    borderDash: [6, 6],
+                                    label: {
+                                        content: `Límite Inf. ${lower_diff.toFixed(2)}`,
+                                        enabled: true,
+                                        position: 'start'
+                                    }
+                                },
+                                line2: {
+                                    type: 'line',
+                                    xMin: upper_diff,
+                                    xMax: upper_diff,
+                                    borderColor: 'rgba(153, 102, 255, 1)',
+                                    borderWidth: 2,
+                                    borderDash: [6, 6],
+                                    label: {
+                                        content: `Límite Sup. ${upper_diff.toFixed(2)}`,
+                                        enabled: true,
+                                        position: 'end'
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Diferencia (X̄_A - X̄_B)' } },
+                        y: { title: { display: true, text: 'Densidad' } }
+                    }
+                }
+            });
+        }
+
+        function ejercicio_4() {
+            // Parámetros
+            const p_N = 0.48, n_N = 200;
+            const p_S = 0.42, n_S = 200;
+            const diff_p = p_N - p_S;
+            const se_diff_p = Math.sqrt(p_N * (1 - p_N) / n_N + p_S * (1 - p_S) / n_S);
+
+            // Cálculos
+            const prob_a_diff_p = 1 - jStat.normal.cdf(0.10, diff_p, se_diff_p);
+            const prob_b_diff_p = jStat.normal.cdf(0.02, diff_p, se_diff_p);
+            const prob_c_diff_p = jStat.normal.cdf(0.08, diff_p, se_diff_p) - jStat.normal.cdf(0.04, diff_p, se_diff_p);
+
+            // Datos para el gráfico
+            const x = [], y = [], fill_a = [], fill_b = [], fill_c = [];
+            const start = diff_p - 4 * se_diff_p;
+            const end = diff_p + 4 * se_diff_p;
+            for (let i = start; i <= end; i += 0.001) {
+                x.push(i);
+                const pdfVal = jStat.normal.pdf(i, diff_p, se_diff_p);
+                y.push(pdfVal);
+                fill_a.push(i > 0.10 ? pdfVal : 0);
+                fill_b.push(i < 0.02 ? pdfVal : 0);
+                fill_c.push(i >= 0.04 && i <= 0.08 ? pdfVal : 0);
+            }
+            
+            renderChart({
+                canvasId: 'grafico_4',
+                resultsId: 'resultados_4',
+                resultsHTML: `
+                    <p>a) P(D_p &gt; 0.10) = ${prob_a_diff_p.toFixed(4)}</p>
+                    <p>b) P(D_p &lt; 0.02) = ${prob_b_diff_p.toFixed(4)}</p>
+                    <p>c) P(0.04 &lt; D_p &lt; 0.08) = ${prob_c_diff_p.toFixed(4)}</p>
+                `,
+                chartData: {
+                    labels: x,
+                    datasets: [{
+                        label: 'P(Dp > 0.10)',
+                        data: fill_a,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(Dp < 0.02)',
+                        data: fill_b,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(0.04 ≤ Dp ≤ 0.08)',
+                        data: fill_c,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'Distribución Normal',
+                        data: y,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                chartOptions: {
+                    plugins: {
+                        title: { display: true, text: 'Distribución Muestral de la Diferencia de Proporciones' },
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Diferencia (p̂_N - p̂_S)' }, ticks: { callback: val => val.toFixed(3) } },
+                        y: { title: { display: true, text: 'Densidad' } }
+                    }
+                }
+            });
+        }
+
+        // Event listeners para las pestañas
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('#ejerciciosTab button');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('shown.bs.tab', (event) => {
+                    const targetId = event.target.id;
+                    if (targetId === 'ej1-tab') ejercicio_1();
+                    else if (targetId === 'ej2-tab') ejercicio_2();
+                    else if (targetId === 'ej3-tab') ejercicio_3();
+                    else if (targetId === 'ej4-tab') ejercicio_4();
+                });
+            });
+
+            // Cargar el primer ejercicio al iniciar la página
+            ejercicio_1();
+        });
+    </script>
+
+</body>
+</html>

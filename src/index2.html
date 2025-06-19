@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Estadística con Gráficos y Soluciones</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 2rem;
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        canvas {
+            max-height: 400px;
+            margin-top: 1.5rem;
+        }
+        .nav-tabs .nav-link {
+            color: #495057;
+        }
+        .nav-tabs .nav-link.active {
+            color: #0d6efd;
+            background-color: #fff;
+            border-color: #dee2e6 #dee2e6 #fff;
+        }
+        .results {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e9ecef;
+            border-radius: 6px;
+        }
+        .results p {
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+        }
+        .resolution {
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            background-color: #f0f8ff;
+        }
+        .resolution h4 {
+            margin-top: 1rem;
+        }
+        .resolution pre {
+            background-color: #e9ecef;
+            padding: 0.5rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .authors {
+            margin-top: 2rem;
+            border-top: 1px solid #ccc;
+            padding-top: 1rem;
+        }
+        .authors h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .authors table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .authors th, .authors td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .appendix {
+            margin-top: 2rem;
+            border-top: 1px solid #ccc;
+            padding-top: 1rem;
+        }
+        .appendix h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .appendix table {
+            width: auto;
+            border-collapse: collapse;
+        }
+        .appendix th, .appendix td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="mb-4 text-center">Calculadora de Distribuciones Muestrales</h1>
+        
+        <div class="authors">
+            <h2>👥 Autores</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Cédula</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Franyer Marin</td>
+                        <td>32.293.396</td>
+                    </tr>
+                    <tr>
+                        <td>Ricardo Alzurutt</td>
+                        <td>25.971.680</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <ul class="nav nav-tabs" id="ejerciciosTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="ej1-tab" data-bs-toggle="tab" data-bs-target="#ejercicio1" type="button" role="tab">Ejercicio 1</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ej2-tab" data-bs-toggle="tab" data-bs-target="#ejercicio2" type="button" role="tab">Ejercicio 2</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ej3-tab" data-bs-toggle="tab" data-bs-target="#ejercicio3" type="button" role="tab">Ejercicio 3</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ej4-tab" data-bs-toggle="tab" data-bs-target="#ejercicio4" type="button" role="tab">Ejercicio 4</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="ejerciciosTabContent">
+            <div class="tab-pane fade show active" id="ejercicio1" role="tabpanel">
+                <h3 class="mt-4">Ejercicio 1: Distribución Muestral de la Media (Población Normal)</h3>
+                <p>Una fábrica de componentes electrónicos produce resistencias con vida útil distribuida normalmente (μ = 800 horas, σ = 40 horas). Semanalmente se analiza una muestra de 64 resistencias para verificar cumplimiento de estándares. La gerencia requiere comprender el comportamiento estadístico de estas muestras.</p>
+                <div id="resultados_1" class="results"></div>
+                <canvas id="grafico_1"></canvas>
+                <div class="resolution">
+                    <h4>🔍 Solución Manual:</h4>
+                    <h5>a) Probabilidad de vida media &lt; 790 horas</h5>
+                    <p><strong>Paso 1:</strong> Calcular error estándar</p>
+                    <pre>σ<span class="math"><sub><0xC8><0xB3></sub></span> = σ / √n = 40 / √64 = 40 / 8 = 5</pre>
+                    <p><strong>Paso 2:</strong> Calcular Z</p>
+                    <pre>Z = (X̄ - μ) / σ<span class="math"><sub><0xC8><0xB3></sub></span> = (790 - 800) / 5 = -10 / 5 = -2.0</pre>
+                    <p><strong>Paso 3:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z &lt; -2.0) = 0.0228 (área bajo curva normal estándar)</p>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad = 0.0228 (2.28%)</p>
+
+                    <h5>b) Probabilidad entre 790 y 810 horas</h5>
+                    <p><strong>Paso 1:</strong> Calcular Z para 810</p>
+                    <pre>Z = (810 - 800) / 5 = 10 / 5 = 2.0</pre>
+                    <p><strong>Paso 2:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z &lt; 2.0) = 0.9772</p>
+                    <p>- P(Z &lt; -2.0) = 0.0228</p>
+                    <p><strong>Paso 3:</strong> Calcular diferencia</p>
+                    <pre>P(790 &lt; X̄ &lt; 810) = 0.9772 - 0.0228 = 0.9544</pre>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad = 0.9544 (95.44%)</p>
+
+                    <h5>c) Probabilidad de vida media superior a 815 horas</h5>
+                    <p><strong>Paso 1:</strong> Calcular error estándar</p>
+                    <pre>σ<span class="math"><sub><0xC8><0xB3></sub></span> = σ / √n = 40 / √64 = 5</pre>
+                    <p><strong>Paso 2:</strong> Calcular Z</p>
+                    <pre>Z = (X̄ - μ) / σ<span class="math"><sub><0xC8><0xB3></sub></span> = (815 - 800) / 5 = 15 / 5 = 3.0</pre>
+                    <p><strong>Paso 3:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z > 3.0) = 1 - Φ(3.0) ≈ 0.0013</p>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad ≈ 0.0013 (0.13%). Valores tan extremos sugieren anomalías en el proceso o mediciones atípicas.</p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="ejercicio2" role="tabpanel">
+                <h3 class="mt-4">Ejercicio 2: Distribución Muestral para la Proporción</h3>
+                <p>Estudio en universidades estatales revela que 35% de estudiantes usa transporte público. Para evaluar políticas de movilidad, se encuestan grupos de 100 estudiantes en distintos campus.</p>
+                <div id="resultados_2" class="results"></div>
+                <canvas id="grafico_2"></canvas>
+                <div class="resolution">
+                    <h4>🔍 Solución Manual:</h4>
+                    <h5>a) Probabilidad de proporción muestral &lt; 30%</h5>
+                    <p><strong>Paso 1:</strong> Verificar normalidad</p>
+                    <pre>np = 100 × 0.35 = 35 ≥ 5</pre>
+                    <pre>n(1-p) = 100 × 0.65 = 65 ≥ 5</pre>
+                    <p>→ Se aproxima a normal</p>
+                    <p><strong>Paso 2:</strong> Calcular error estándar</p>
+                    <pre>σ<span class="math"><sub><0xE2><0x86><0x95></sub></span> = √(p(1-p)/n) = √(0.35 × 0.65 / 100) = √0.002275 ≈ 0.0477</pre>
+                    <p><strong>Paso 3:</strong> Calcular Z</p>
+                    <pre>Z = (p̂ - p) / σ<span class="math"><sub><0xE2><0x86><0x95></sub></span> = (0.30 - 0.35) / 0.0477 ≈ -1.048</pre>
+                    <p><strong>Paso 4:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z &lt; -1.05) ≈ 0.1469</p>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad ≈ 0.1469 (14.69%)</p>
+
+                    <h5>b) Probabilidad entre 30% y 40%</h5>
+                    <p><strong>Paso 1:</strong> Calcular Z para 40%</p>
+                    <pre>Z = (0.40 - 0.35) / 0.0477 ≈ 1.048</pre>
+                    <p><strong>Paso 2:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z &lt; 1.05) ≈ 0.8531</p>
+                    <p>- P(Z &lt; -1.05) ≈ 0.1469</p>
+                    <p><strong>Paso 3:</strong> Calcular diferencia</p>
+                    <pre>P(0.30 &lt; p̂ &lt; 0.40) = 0.8531 - 0.1469 = 0.7062</pre>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad ≈ 0.7062 (70.62%)</p>
+
+                    <h5>c) Probabilidad de proporción muestral > 42%</h5>
+                    <p><strong>Paso 1:</strong> Verificar normalidad</p>
+                    <pre>np = 100 × 0.35 = 35 ≥ 5</pre>
+                    <pre>n(1-p) = 100 × 0.65 = 65 ≥ 5</pre>
+                    <p>→ Aproximación válida</p>
+                    <p><strong>Paso 2:</strong> Calcular error estándar</p>
+                    <pre>σ<span class="math"><sub><0xE2><0x86><0x95></sub></span> = √(p(1-p)/n) = √(0.35 × 0.65 / 100) ≈ 0.0477</pre>
+                    <p><strong>Paso 3:</strong> Calcular Z</p>
+                    <pre>Z = (p̂ - p) / σ<span class="math"><sub><0xE2><0x86><0x95></sub></span> = (0.42 - 0.35) / 0.0477 ≈ 1.47</pre>
+                    <p><strong>Paso 4:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z > 1.47) ≈ 1 - 0.9292 = 0.0708</p>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad ≈ 0.0708 (7.08%). Esto indica que en ~7% de las muestras se sobreestimaría el uso real en ≥7 puntos porcentuales.</p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="ejercicio3" role="tabpanel">
+                <h3 class="mt-4">Ejercicio 3: Diferencia de Medias (Dos Poblaciones)</h3>
+                <p>Laboratorio farmacéutico compara antihipertensivos (Fármaco A: μ=120 mg/dL, σ=15; Fármaco B: μ=115 mg/dL, σ=12). Ensayo con 50 pacientes por grupo analiza diferencias en reducción de colesterol.</p>
+                <div id="resultados_3" class="results"></div>
+                <canvas id="grafico_3"></canvas>
+                <div class="resolution">
+                    <h4>🔍 Solución Manual:</h4>
+                    <h5>a) Probabilidad de diferencia > 8 mg/dL</h5>
+                    <p><strong>Paso 1:</strong> Calcular diferencia poblacional</p>
+                    <pre>μ<span class="math"><sub>A</sub></span> - μ<span class="math"><sub>B</sub></span> = 120 - 115 = 5</pre>
+                    <p><strong>Paso 2:</strong> Calcular error estándar</p>
+                    <pre>σ<span class="math"><sub>X̄<0xE2><0x82><0x90> - X̄<0xE2><0x82><0x81></sub></span> = √(σ<span class="math"><sub>A</sub></span>² / n<span class="math"><sub>A</sub></span> + σ<span class="math"><sub>B</sub></span>² / n<span class="math"><sub>B</sub></span>) = √(15² / 50 + 12² / 50) = √(4.5 + 2.88) ≈ 2.717</pre>
+                    <p><strong>Paso 3:</strong> Calcular Z</p>
+                    <pre>Numerador = (X̄<span class="math"><sub>A</sub></span> - X̄<span class="math"><sub>B</sub></span>) - (μ<span class="math"><sub>A</sub></span> - μ<span class="math"><sub>B</sub></span>) = 8 - 5 = 3</pre>
+                    <pre>σ<span class="math"><sub>D</sub></span> = √(σ<span class="math"><sub>A</sub></span>² / n<span class="math"><sub>A</sub></span> + σ<span class="math"><sub>B</sub></span>² / n<span class="math"><sub>B</sub></span>) = √(15² / 50 + 12² / 50) = √(4.5 + 2.88) = √7.38 ≈ 2.717</pre>
+                    <pre>Z = Numerador / σ<span class="math"><sub>D</sub></span> = 3 / 2.717 ≈ 1.104</pre>
+                    <p><strong>Paso 4:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z > 1.10) = 1 - 0.8643 = 0.1357</p>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad ≈ 0.1357 (13.57%)</p>
+
+                    <h5>b) Probabilidad entre 4 y 7 mg/dL</h5>
+                    <p><strong>Paso 1:</strong> Calcular Z para 4 y 7</p>
+                    <pre>Z<span class="math"><sub>4</sub></span> = (4 - 5) / 2.717 ≈ -0.368</pre>
+                    <pre>Z<span class="math"><sub>7</sub></span> = (7 - 5) / 2.717 ≈ 0.736</pre>
+                    <p><strong>Paso 2:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z < 0.74) ≈ 0.7704</p>
+                    <p>- P(Z < -0.37) ≈ 0.3557</p>
+                    <p><strong>Paso 3:</strong> Calcular diferencia</p>
+                    <pre>P(4 &lt; D &lt; 7) = 0.7704 - 0.3557 = 0.4147</pre>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad ≈ 0.4147 (41.47%)</p>
+
+                    <h5>c) Intervalo del 90% para diferencia real</h5>
+                    <p><strong>Paso 1:</strong> Identificar Z crítico</p>
+                    <p>- Para 90% confianza: Z = 1.645</p>
+                    <p><strong>Paso 2:</strong> Calcular límites</p>
+                    <pre>Límite inferior = 5 - 1.645 × 2.717 ≈ 0.53</pre>
+                    <pre>Límite superior = 5 + 1.645 × 2.717 ≈ 9.47</pre>
+                    <p><strong>📌 Conclusión:</strong> Intervalo: [0.53, 9.47] mg/dL</p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="ejercicio4" role="tabpanel">
+                <h3 class="mt-4">Ejercicio 4: Diferencia de Proporciones</h3>
+                <p>Consultora política mide aprobación presidencial en Norte (p=0.48) y Sur (p=0.42). Previo a elecciones, encuestas de 200 personas por región detectan cambios significativos.</p>
+                <div id="resultados_4" class="results"></div>
+                <canvas id="grafico_4"></canvas>
+                <div class="resolution">
+                    <h4>🔍 Solución Manual:</h4>
+                    <h5>a) Probabilidad de diferencia > 10%</h5>
+                    <p><strong>Paso 1:</strong> Calcular diferencia poblacional</p>
+                    <pre>p<span class="math"><sub>N</sub></span> - p<span class="math"><sub>S</sub></span> = 0.48 - 0.42 = 0.06</pre>
+                    <p><strong>Paso 2:</strong> Calcular error estándar</p>
+                    <pre>σ<span class="math"><sub>p̂<0xE2><0x82><0x98> - p̂<0xE2><0x82><0x82></sub></span> = √(p<span class="math"><sub>N</sub></span>(1-p<span class="math"><sub>N</sub></span>)/n<span class="math"><sub>N</sub></span> + p<span class="math"><sub>S</sub></span>(1-p<span class="math"><sub>S</sub></span>)/n<span class="math"><sub>S</sub></span>) = √(0.48 × 0.52 / 200 + 0.42 × 0.58 / 200) ≈ √0.001248 + 0.001218 ≈ 0.0497</pre>
+                    <p><strong>Paso 3:</strong> Calcular Z</p>
+                    <pre>Z = (0.10 - 0.06) / 0.0497 ≈ 0.805</pre>
+                    <p><strong>Paso 4:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z > 0.80) = 1 - 0.7881 = 0.2119</p>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad ≈ 0.2119 (21.19%)</p>
+
+                    <h5>b) Probabilidad de diferencia &lt; 2%</h5>
+                    <p><strong>Paso 1:</strong> Calcular Z</p>
+                    <pre>Z = (0.02 - 0.06) / 0.0497 ≈ -0.805</pre>
+                    <p><strong>Paso 2:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z < -0.80) = 0.2119</p>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad ≈ 0.2119 (21.19%)</p>
+
+                    <h5>c) Probabilidad de diferencia entre 4% y 8%</h5>
+                    <p><strong>Paso 1:</strong> Calcular error estándar</p>
+                    <pre>σ<span class="math"><sub>D</sub></span> = √(p<span class="math"><sub>N</sub></span>(1-p<span class="math"><sub>N</sub></span>)/n<span class="math"><sub>N</sub></span> + p<span class="math"><sub>S</sub></span>(1-p<span class="math"><sub>S</sub></span>)/n<span class="math"><sub>S</sub></span>) ≈ 0.0497</pre>
+                    <p><strong>Paso 2:</strong> Calcular Z para 4% y 8%</p>
+                    <pre>Z<span class="math"><sub>0.04</sub></span> = (0.04 - 0.06) / 0.0497 ≈ -0.40</pre>
+                    <pre>Z<span class="math"><sub>0.08</sub></span> = (0.08 - 0.06) / 0.0497 ≈ 0.40</pre>
+                    <p><strong>Paso 3:</strong> Buscar en tabla Z</p>
+                    <p>- P(Z < 0.40) ≈ 0.6554</p>
+                    <p>- P(Z < -0.40) ≈ 0.3446</p>
+                    <p><strong>Paso 4:</strong> Calcular diferencia</p>
+                    <pre>P(0.04 &lt; D &lt; 0.08) = 0.6554 - 0.3446 = 0.3108</pre>
+                    <p><strong>📌 Conclusión:</strong> Probabilidad ≈ 0.3108 (31.08%). Esto muestra que en ~31% de las encuestas, la brecha observada subestimaría la diferencia real (6%) en un 33-50%.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="appendix">
+            <h2>📚 Apéndice: Tabla Z Estándar (Valores Seleccionados)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Z</th>
+                        <th>0.00</th>
+                        <th>0.05</th>
+                        <th>0.10</th>
+                        <th>...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>-2.0</td>
+                        <td>0.0228</td>
+                        <td>0.0202</td>
+                        <td>0.0179</td>
+                        <td>...</td>
+                    </tr>
+                    <tr>
+                        <td>-1.5</td>
+                        <td>0.0668</td>
+                        <td>0.0606</td>
+                        <td>0.0548</td>
+                        <td>...</td>
+                    </tr>
+                    <tr>
+                        <td>-1.0</td>
+                        <td>0.1587</td>
+                        <td>0.1469</td>
+                        <td>0.1357</td>
+                        <td>...</td>
+                    </tr>
+                    <tr>
+                        <td>0.0</td>
+                        <td>0.5000</td>
+                        <td>0.4801</td>
+                        <td>0.4602</td>
+                        <td>...</td>
+                    </tr>
+                    <tr>
+                        <td>1.0</td>
+                        <td>0.8413</td>
+                        <td>0.8531</td>
+                        <td>0.8643</td>
+                        <td>...</td>
+                    </tr>
+                    <tr>
+                        <td>1.5</td>
+                        <td>0.9332</td>
+                        <td>0.9394</td>
+                        <td>0.9452</td>
+                        <td>...</td>
+                    </tr>
+                    <tr>
+                        <td>2.0</td>
+                        <td>0.9772</td>
+                        <td>0.9798</td>
+                        <td>0.9821</td>
+                        <td>...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jstat@1.9.6/dist/jstat.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
+
+
+    <script>
+        // Variable global para mantener la instancia del gráfico y poder destruirla al cambiar de pestaña
+        let currentChart = null;
+
+        // Función para renderizar el gráfico y los resultados
+        function renderChart(config) {
+            // Si ya existe un gráfico, lo destruimos para evitar solapamientos y fugas de memoria
+            if (currentChart) {
+                currentChart.destroy();
+            }
+
+            // Mostramos los resultados calculados
+            const resultsContainer = document.getElementById(config.resultsId);
+            resultsContainer.innerHTML = config.resultsHTML;
+
+            // Creamos el nuevo gráfico
+            const ctx = document.getElementById(config.canvasId).getContext('2d');
+            currentChart = new Chart(ctx, {
+                type: 'line',
+                data: config.chartData,
+                options: config.chartOptions
+            });
+        }
+
+        function ejercicio_1() {
+            // Parámetros
+            const mu = 800, sigma = 40, n = 64;
+            const se = sigma / Math.sqrt(n);
+
+            // Cálculos de probabilidad usando jStat
+            const prob_a = jStat.normal.cdf(790, mu, se);
+            const prob_b = jStat.normal.cdf(810, mu, se) - jStat.normal.cdf(790, mu, se);
+            const prob_c = 1 - jStat.normal.cdf(815, mu, se);
+
+            // Preparar datos para el gráfico
+            const x = [];
+            const y = [];
+            const fill_a = [];
+            const fill_b = [];
+            const fill_c = [];
+            const start = mu - 4 * se;
+            const end = mu + 4 * se;
+            for (let i = start; i <= end; i += 0.5) {
+                x.push(i);
+                const pdfVal = jStat.normal.pdf(i, mu, se);
+                y.push(pdfVal);
+                fill_a.push(i < 790 ? pdfVal : 0);
+                fill_b.push(i >= 790 && i <= 810 ? pdfVal : 0);
+                fill_c.push(i > 815 ? pdfVal : 0);
+            }
+
+            renderChart({
+                canvasId: 'grafico_1',
+                resultsId: 'resultados_1',
+                resultsHTML: `
+                    <p>a) P(X̄ &lt; 790) = ${prob_a.toFixed(4)}</p>
+                    <p>b) P(790 &lt; X̄ &lt; 810) = ${prob_b.toFixed(4)}</p>
+                    <p>c) P(X̄ &gt; 815) = ${prob_c.toFixed(4)}</p>
+                `,
+                chartData: {
+                    labels: x,
+                    datasets: [{
+                        label: 'P(X̄ < 790)',
+                        data: fill_a,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)', // Rojo
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(790 ≤ X̄ ≤ 810)',
+                        data: fill_b,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)', // Verde
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(X̄ > 815)',
+                        data: fill_c,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(153, 102, 255, 0.5)', // Morado
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'Distribución Normal',
+                        data: y,
+                        borderColor: 'rgba(54, 162, 235, 1)', // Azul
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                chartOptions: {
+                    plugins: {
+                        title: { display: true, text: 'Distribución Muestral de la Media' },
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Horas de vida útil' } },
+                        y: { title: { display: true, text: 'Densidad' } }
+                    }
+                }
+            });
+        }
+
+        function ejercicio_2() {
+            // Parámetros
+            const p = 0.35, n = 100;
+            const se_p = Math.sqrt(p * (1 - p) / n);
+
+            // Cálculos
+            const prob_a_p = jStat.normal.cdf(0.30, p, se_p);
+            const prob_b_p = jStat.normal.cdf(0.40, p, se_p) - jStat.normal.cdf(0.30, p, se_p);
+            const prob_c_p = 1 - jStat.normal.cdf(0.42, p, se_p);
+
+            // Datos para el gráfico
+            const x = [], y = [], fill_a = [], fill_b = [], fill_c = [];
+            const start = p - 4 * se_p;
+            const end = p + 4 * se_p;
+            for (let i = start; i <= end; i += 0.001) {
+                x.push(i);
+                const pdfVal = jStat.normal.pdf(i, p, se_p);
+                y.push(pdfVal);
+                fill_a.push(i < 0.30 ? pdfVal : 0);
+                fill_b.push(i >= 0.30 && i <= 0.40 ? pdfVal : 0);
+                fill_c.push(i > 0.42 ? pdfVal : 0);
+            }
+
+            renderChart({
+                canvasId: 'grafico_2',
+                resultsId: 'resultados_2',
+                resultsHTML: `
+                    <p>a) P(p̂ &lt; 0.30) = ${prob_a_p.toFixed(4)}</p>
+                    <p>b) P(0.30 ≤ p̂ ≤ 0.40) = ${prob_b_p.toFixed(4)}</p>
+                    <p>c) P(p̂ &gt; 0.42) = ${prob_c_p.toFixed(4)}</p>
+                `,
+                chartData: {
+                    labels: x,
+                    datasets: [{
+                        label: 'P(p̂ < 0.30)',
+                        data: fill_a,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(0.30 ≤ p̂ ≤ 0.40)',
+                        data: fill_b,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(p̂ > 0.42)',
+                        data: fill_c,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'Distribución Normal',
+                        data: y,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                chartOptions: {
+                    plugins: {
+                        title: { display: true, text: 'Distribución Muestral de la Proporción' },
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        x: { 
+                            title: { display: true, text: 'Proporción muestral' }, 
+                            ticks: { callback: val => val.toFixed(3) } 
+                        },
+                        y: { title: { display: true, text: 'Densidad' } }
+                    }
+                }
+            });
+        }
+
+        function ejercicio_3() {
+            // Parámetros
+            const mu_A = 120, sigma_A = 15, n_A = 50;
+            const mu_B = 115, sigma_B = 12, n_B = 50;
+            const diff_mu = mu_A - mu_B;
+            const se_diff = Math.sqrt(sigma_A**2 / n_A + sigma_B**2 / n_B);
+
+            // Cálculos
+            const prob_a_diff = 1 - jStat.normal.cdf(8, diff_mu, se_diff);
+            const prob_b_diff = jStat.normal.cdf(7, diff_mu, se_diff) - jStat.normal.cdf(4, diff_mu, se_diff);
+            
+            // Intervalo de confianza del 90%
+            const z_critical_diff = jStat.normal.inv(0.95, 0, 1); // Z para 95% (cola superior 5%)
+            const lower_diff = diff_mu - z_critical_diff * se_diff;
+            const upper_diff = diff_mu + z_critical_diff * se_diff;
+
+            // Datos para el gráfico
+            const x = [], y = [], fill_a = [], fill_b = [];
+            const start = diff_mu - 4 * se_diff;
+            const end = diff_mu + 4 * se_diff;
+            for (let i = start; i <= end; i += 0.1) {
+                x.push(i);
+                const pdfVal = jStat.normal.pdf(i, diff_mu, se_diff);
+                y.push(pdfVal);
+                fill_a.push(i > 8 ? pdfVal : 0);
+                fill_b.push(i >= 4 && i <= 7 ? pdfVal : 0);
+            }
+
+            renderChart({
+                canvasId: 'grafico_3',
+                resultsId: 'resultados_3',
+                resultsHTML: `
+                    <p>a) P(D &gt; 8) = ${prob_a_diff.toFixed(4)}</p>
+                    <p>b) P(4 &lt; D &lt; 7) = ${prob_b_diff.toFixed(4)}</p>
+                    <p>c) Intervalo 90%: [${lower_diff.toFixed(2)}, ${upper_diff.toFixed(2)}] mg/dL</p>
+                `,
+                chartData: {
+                    labels: x,
+                    datasets: [{
+                        label: 'P(D > 8)',
+                        data: fill_a,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(4 ≤ D ≤ 7)',
+                        data: fill_b,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'Distribución Normal',
+                        data: y,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                chartOptions: {
+                    plugins: {
+                        title: { display: true, text: 'Distribución Muestral de la Diferencia de Medias' },
+                        legend: { position: 'top' },
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    xMin: lower_diff,
+                                    xMax: lower_diff,
+                                    borderColor: 'rgba(153, 102, 255, 1)',
+                                    borderWidth: 2,
+                                    borderDash: [6, 6],
+                                    label: {
+                                        content: `Límite Inf. ${lower_diff.toFixed(2)}`,
+                                        enabled: true,
+                                        position: 'start',
+                                        yAdjust: -10,
+                                        backgroundColor: 'rgba(255, 255, 255, 0.8)'
+                                    }
+                                },
+                                line2: {
+                                    type: 'line',
+                                    xMin: upper_diff,
+                                    xMax: upper_diff,
+                                    borderColor: 'rgba(153, 102, 255, 1)',
+                                    borderWidth: 2,
+                                    borderDash: [6, 6],
+                                    label: {
+                                        content: `Límite Sup. ${upper_diff.toFixed(2)}`,
+                                        enabled: true,
+                                        position: 'end',
+                                        yAdjust: -10,
+                                        backgroundColor: 'rgba(255, 255, 255, 0.8)'
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Diferencia (X̄_A - X̄_B)' } },
+                        y: { title: { display: true, text: 'Densidad' } }
+                    }
+                }
+            });
+        }
+
+        function ejercicio_4() {
+            // Parámetros
+            const p_N = 0.48, n_N = 200;
+            const p_S = 0.42, n_S = 200;
+            const diff_p = p_N - p_S;
+            const se_diff_p = Math.sqrt(p_N * (1 - p_N) / n_N + p_S * (1 - p_S) / n_S);
+
+            // Cálculos
+            const prob_a_diff_p = 1 - jStat.normal.cdf(0.10, diff_p, se_diff_p);
+            const prob_b_diff_p = jStat.normal.cdf(0.02, diff_p, se_diff_p);
+            const prob_c_diff_p = jStat.normal.cdf(0.08, diff_p, se_diff_p) - jStat.normal.cdf(0.04, diff_p, se_diff_p);
+
+            // Datos para el gráfico
+            const x = [], y = [], fill_a = [], fill_b = [], fill_c = [];
+            const start = diff_p - 4 * se_diff_p;
+            const end = diff_p + 4 * se_diff_p;
+            for (let i = start; i <= end; i += 0.001) {
+                x.push(i);
+                const pdfVal = jStat.normal.pdf(i, diff_p, se_diff_p);
+                y.push(pdfVal);
+                fill_a.push(i > 0.10 ? pdfVal : 0);
+                fill_b.push(i < 0.02 ? pdfVal : 0);
+                fill_c.push(i >= 0.04 && i <= 0.08 ? pdfVal : 0);
+            }
+            
+            renderChart({
+                canvasId: 'grafico_4',
+                resultsId: 'resultados_4',
+                resultsHTML: `
+                    <p>a) P(D_p &gt; 0.10) = ${prob_a_diff_p.toFixed(4)}</p>
+                    <p>b) P(D_p &lt; 0.02) = ${prob_b_diff_p.toFixed(4)}</p>
+                    <p>c) P(0.04 &lt; D_p &lt; 0.08) = ${prob_c_diff_p.toFixed(4)}</p>
+                `,
+                chartData: {
+                    labels: x,
+                    datasets: [{
+                        label: 'P(Dp > 0.10)',
+                        data: fill_a,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(Dp < 0.02)',
+                        data: fill_b,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'P(0.04 ≤ Dp ≤ 0.08)',
+                        data: fill_c,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                        borderColor: 'transparent',
+                        pointRadius: 0
+                    }, {
+                        label: 'Distribución Normal',
+                        data: y,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                chartOptions: {
+                    plugins: {
+                        title: { display: true, text: 'Distribución Muestral de la Diferencia de Proporciones' },
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        x: { 
+                            title: { display: true, text: 'Diferencia (p̂_N - p̂_S)' }, 
+                            ticks: { callback: val => val.toFixed(3) } 
+                        },
+                        y: { title: { display: true, text: 'Densidad' } }
+                    }
+                }
+            });
+        }
+
+        // Event listeners para las pestañas de navegación
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('#ejerciciosTab button');
+            
+            tabButtons.forEach(button => {
+                // El evento 'shown.bs.tab' se dispara después de que una pestaña se ha hecho visible
+                button.addEventListener('shown.bs.tab', (event) => {
+                    const targetId = event.target.id;
+                    if (targetId === 'ej1-tab') ejercicio_1();
+                    else if (targetId === 'ej2-tab') ejercicio_2();
+                    else if (targetId === 'ej3-tab') ejercicio_3();
+                    else if (targetId === 'ej4-tab') ejercicio_4();
+                });
+            });
+
+            // Cargar el primer ejercicio al iniciar la página para que no aparezca vacía
+            ejercicio_1();
+        });
+    </script>
+
+</body>
+</html>
